@@ -200,7 +200,7 @@ def make_noise_dict(psrname, chain, pars, method='mode', suffix = 'noise', \
 
   if not recompute:
     if os.path.exists(result_filename):
-      xx = json.load(open(result_fileneame, 'r'))
+      xx = json.load(open(result_filename, 'r'))
       return(xx)
 
   xx = {}
@@ -888,13 +888,13 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                   color = _color, \
                   linewidth = 0.8 \
                  )
-      
+
       ax1.axvline(_os/_os_err, \
                   linestyle = '-.', \
                   color = _color, \
                   linewidth = 0.8 \
                  )
-      
+
       if orf == 'monopole':
         bins = 'blocks'
       else:
@@ -908,13 +908,13 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
              ax = ax2, \
              bins = bins \
             )
-       
+
       ax2.axvline(np.mean(_noisemarg_os), \
                   linestyle = '--', \
                   color = _color, \
                   linewidth = 0.8, \
                  )
-      
+
       ax2.axvline(_os, \
                   linestyle = '-.', \
                   color = _color, \
@@ -937,7 +937,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
            ax = ax2, \
            bins = 'knuth' \
           )
-    
+
     ax2.axvline((10.0**(np.mean(self.gw_log10_A)))**2.0, linestyle = '--', \
                 color = '0.5', linewidth = 0.8)
     ax2.legend(fontsize = 9)
@@ -955,7 +955,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     with open(fname, 'wb') as _file:
       dump_struct = dict()
       for _orf in self.optstat_orfs:
-        
+
         _result = self.OptimalStatisticResults[_orf]
         orf_dump = {'params': _result.params, \
                     'xi':    _result.xi, \
@@ -970,11 +970,11 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                     'rho_avg': _result.rho_avg, \
                     'sig_avg': _result.sig_avg
         }
-      
+
         dump_struct[_orf] = orf_dump
-      
+
       pickle.dump(dump_struct, _file)
-      
+
     return True
 
   def load_results(self):
