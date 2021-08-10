@@ -95,6 +95,10 @@ def parse_commandline():
                     analysis.",
                     default = 1000, type = int)
 
+  parser.add_option("-M", "--optimal_statistic_nmodel", help = "Set which \
+                    model index will be used for optimal statistic",
+                    default = 0, type = int)
+
   parser.add_option("-L", "--load_optimal_statistic_results", help = "load \
                     results from optimal statistic analysis. Do not recalculate\
                     any results. (1/0)",
@@ -724,7 +728,8 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
 
   def _get_pta(self):
     #hard-coding in choice of model 0 here
-    self.pta = enterprise_warp.init_pta(self.params)[0]
+    self.pta = enterprise_warp.init_pta(self.params)\
+               [self.opts.optimal_statistic_nmodel]
 
   def _add_optimalstatistics(self, method='mode', chain_idx = 0):
     optstat_dict = {}
