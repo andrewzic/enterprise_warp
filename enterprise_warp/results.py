@@ -692,8 +692,9 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
         self._avg_ostat_bins()
         self.dump_results()
 
-      self.plot_noisemarg_os()
       self.plot_os_orf()
+      self.plot_noisemarg_os()
+
 
       return True
 
