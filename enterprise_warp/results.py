@@ -323,7 +323,23 @@ class OptimalStatisticResult(object):
     self.xi_err = xi_err
     self.rho_avg = rho_avg
     self.sig_avg = sig_avg
-    #return xi_mean, xi_err, rho_avg, sig_avg
+
+    return True
+
+  def add_avg_ostat_bins(self, n_psr, xi_avg = None, xi_err = None, \
+                         rho_avg = None, sig_avg = None):
+    if xi_avg == None or \
+       xi_err == None or \
+       rho_avg == None or \
+       sig_avg == None:
+       self.avg_ostat_bins(n_psr)
+    else:
+      self.xi_avg = xi_avg
+      self.xi_err = xi_err
+      self.rho_avg = rho_avg
+      self.sig_avg = sig_avg
+
+    return True
 
 
 class EnterpriseWarpResult(object):
@@ -663,7 +679,13 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
         continue
 
       if self.opts.load_optimal_statistic_results == 1:
-        self.load_results()
+        try:
+          self.load_results()
+        except FileNotFoundError:
+          self._add_optimalstatistics(method = 'mode')
+          self._marginalise_ostat()
+          self._avg_ostat_bins()
+          self.dump_results()
       else:
         self._add_optimalstatistics(method = 'mode')
         self._marginalise_ostat()
@@ -789,7 +811,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
 
   def _avg_ostat_bins(self):
     for orf, _osr in self.OptimalStatisticResults.items():
-      _osr.avg_ostat_bins(len(self.params.psrs))
+      _osr.add_avg_ostat_bins(len(self.params.psrs))
 
   def plot_os_orf(self):
 
@@ -863,6 +885,8 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                 )
     plt.close(fig)
 
+    return True
+
   def plot_noisemarg_os(self):
     from astropy.visualization import hist as a_hist
     #plot OS S/N
@@ -932,7 +956,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax1.minorticks_on()
     fig1.savefig(self.outdir_all + '/' + self.psr_dir + '_os_SNR_' +  '_' +\
                  self.par_out_label + '.png', dpi = 300, bbox_inches = 'tight')
-    plt.close(fig1)
+    #plt.close(fig1)
 
     a_hist((10.0**(self.gw_log10_A))**2.0, \
            histtype = 'step', \
@@ -954,6 +978,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                  '_' + self.par_out_label + '.png', dpi = 300, \
                  bbox_inches = 'tight')
     plt.close(fig2)
+    plt.close(fig1)
 
   def dump_results(self):
     fname = self.outdir_all + '/' + self.psr_dir + '_os_results.pkl'
@@ -984,12 +1009,34 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
 
   def load_results(self):
     fname = self.outdir_all + '/' + self.psr_dir + '_os_results.pkl'
-    _file = open(fname, 'r')
-    _OptimalStatisticResults = pickle.load(_file) #dumped pickle is not an optimalstatisticresult. this is broken - need to fix
-    self.OptimalStatisticResults = _OptimalStatisticResults
-    #need to add functionalitu
-    return True
+    _file = open(fname, 'rb')
+    _OptimalStatisticResults = pickle.load(_file)
 
+    optstat_dict = dict()
+
+    for _orf, _dump in _OptimalStatisticResults.items():
+      print('Loading optimal statistic results for {} ORF'.format(_orf))
+      _os = OptStat(self.params.psrs, pta = self.pta, orf = _orf)
+
+      result = OptimalStatisticResult(_os, _dump['params'], \
+                                           _dump['xi'], \
+                                           _dump['rho'], \
+                                           _dump['sig'], \
+                                           _dump['OS'], \
+                                           _dump['OS_err'])
+
+      result.add_marginalised(_dump['marginalised_os'], \
+                              _dump['marginalised_os_err'])
+      result.add_avg_ostat_bins(len(self.params.psrs), \
+                                _dump['xi_avg'], \
+                                _dump['xi_err'], \
+                                _dump['rho_avg'], \
+                                _dump['sig_avg'])
+      optstat_dict[_orf] = result
+
+
+    self.OptimalStatisticResults = optstat_dict
+    return True
 
 
 class BilbyWarpResult(EnterpriseWarpResult):
