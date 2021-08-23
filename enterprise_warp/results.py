@@ -786,7 +786,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
   def _marginalise_ostat(self):
 
     for orf in self.optstat_orfs:
-      print(self.OptimalStatisticResults)
+      print("Computing noise-marginalised optimal statistic for {}".format(orf))
       _osr = self.OptimalStatisticResults[orf]
       _os = _osr.OptimalStatistic
 
@@ -879,11 +879,10 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax.set_ylabel(r'$\hat{{A}}^2 \Gamma_{{ab}}(\zeta)$')
     ax.minorticks_on()
     fig.tight_layout()
-    fig.savefig(
-                self.outdir_all + '/' + self.psr_dir + '_os_orf_' + \
-                self.par_out_label + '.png', dpi = 300, \
-                bbox_inches = 'tight' \
-                )
+    figname = self.outdir_all + '/' + self.psr_dir + '_os_orf_' + \
+              self.par_out_label + '.png'
+    print(figname)
+    plt.savefig(figname, bbox_inches = 'tight', dpi = 300)
     plt.close(fig)
 
     return True
@@ -955,7 +954,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax1.set_xlabel('SNR')
     ax1.set_ylabel('Probability density')
     ax1.minorticks_on()
-    fig1.savefig(self.outdir_all + '/' + self.psr_dir + '_os_SNR_' +  '_' +\
+    plt.savefig(self.outdir_all + '/' + self.psr_dir + '_os_SNR_' +  '_' +\
                  self.par_out_label + '.png', dpi = 300, bbox_inches = 'tight')
     #plt.close(fig1)
 
@@ -971,11 +970,11 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax2.axvline((10.0**(np.mean(self.gw_log10_A)))**2.0, linestyle = '--', \
                 color = '0.5', linewidth = 0.8)
     ax2.legend(fontsize = 9)
-    ax2.set_xlabel('$\hat{{A}}^{{2}} \& {{A}}^{{2}}_{{\mathrm{{CP}}}}$')
+    ax2.set_xlabel('$\hat{{A}}^{{2}}$ & ${{A}}^{{2}}_{{\mathrm{{CP}}}}$')
     ax2.set_ylabel('Probability density')
     ax2.set_xlim(-2.0E-29, 8E-29)
     ax2.minorticks_on()
-    fig2.savefig(self.outdir_all + '/' + self.psr_dir + '_os_A2_' + \
+    plt.savefig(self.outdir_all + '/' + self.psr_dir + '_os_A2_' + \
                  '_' + self.par_out_label + '.png', dpi = 300, \
                  bbox_inches = 'tight')
     plt.close(fig2)
