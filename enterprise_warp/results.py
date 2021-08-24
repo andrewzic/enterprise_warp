@@ -104,6 +104,11 @@ def parse_commandline():
                     any results. (1/0)",
                     default = 0, type = int)
 
+  parser.add_option("-P", "--nopta", help = "Do not initiate PTA object or\
+                    Optimal Statistic object. Useful if just replotting premade\
+                    OptStat results. (1/0)",
+                    default = 0, type = int)
+
 
   parser.add_option("-y", "--bilby", help="Load bilby result", \
                     default=0, type=int)
@@ -1016,7 +1021,10 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
 
     for _orf, _dump in _OptimalStatisticResults.items():
       print('Loading optimal statistic results for {} ORF'.format(_orf))
-      _os = OptStat(self.params.psrs, pta = self.pta, orf = _orf)
+      if self.opts.nopta == 1: #don't initiate PTA or OS object
+        _os = 'lmao'
+      else:
+        _os = OptStat(self.params.psrs, pta = self.pta, orf = _orf)
 
       result = OptimalStatisticResult(_os, _dump['params'], \
                                            _dump['xi'], \
