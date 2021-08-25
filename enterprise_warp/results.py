@@ -681,10 +681,9 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
       if not success:
         continue
 
-      if self.opts.nopta == 0:
-        success = self.load_chains()
-        if not success:
-          continue
+      success = self.load_chains()
+      if not success:
+        continue
 
       if self.opts.load_optimal_statistic_results == 1:
         try:
