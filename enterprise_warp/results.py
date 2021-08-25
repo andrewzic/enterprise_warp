@@ -331,12 +331,14 @@ class OptimalStatisticResult(object):
 
     return True
 
-  def add_avg_ostat_bins(self, n_psr, xi_avg = None, xi_err = None, \
-                         rho_avg = None, sig_avg = None):
-    if xi_avg == None or \
-       xi_err == None or \
-       rho_avg == None or \
-       sig_avg == None:
+  def add_avg_ostat_bins(self, n_psr, xi_avg = np.array([None]), \
+                                      xi_err = np.array([None]), \
+                                      rho_avg = np.array([None]), \
+                                      sig_avg = np.array([None])):
+    if (xi_avg[0] == None) or \
+       (xi_err[0] == None) or \
+       (rho_avg[0] == None) or \
+       (sig_avg[0] == None):
        self.avg_ostat_bins(n_psr)
     else:
       self.xi_avg = xi_avg
