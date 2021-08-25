@@ -1015,6 +1015,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
 
   def load_results(self):
     fname = self.outdir_all + '/' + self.psr_dir + '_os_results.pkl'
+    print('Attempting to open optimal statistics results in {}'.format(fname))
     _file = open(fname, 'rb')
     _OptimalStatisticResults = pickle.load(_file)
 
