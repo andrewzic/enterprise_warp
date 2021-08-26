@@ -965,7 +965,12 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                  self.par_out_label + '.png', dpi = 300, bbox_inches = 'tight')
     #plt.close(fig1)
 
-    a_hist((10.0**(self.gw_log10_A))**2.0, \
+    samp_indices = np.random.randint(0, \
+                                     self.chain_burn.shape[0], \
+                                     size = self.optstat_nsamp \
+                                    )
+
+    a_hist(((10.0**(self.gw_log10_A))**2.0)[samp_indices], \
            histtype = 'step', \
            color = '0.5', \
            label = 'uncorrelated', \
