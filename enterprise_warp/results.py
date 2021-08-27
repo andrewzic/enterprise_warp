@@ -984,6 +984,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax2.legend(fontsize = 9)
     ax2.set_xlabel('$\hat{{A}}^{{2}}$ & ${{A}}^{{2}}_{{\mathrm{{CP}}}}$')
     ax2.set_ylabel('Probability density')
+    ax2.set_yscale('log')
     ax2.set_xlim(-2.0E-29, 8E-29)
     ax2.minorticks_on()
     fig2.savefig(self.outdir_all + '/' + self.psr_dir + '_os_A2_' + \
