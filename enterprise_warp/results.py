@@ -113,6 +113,9 @@ def parse_commandline():
   parser.add_option("-y", "--bilby", help="Load bilby result", \
                     default=0, type=int)
 
+  parser.add_option("--load_custom_model", help="Load in custom PPTA DR2 models", \
+                      default=0, type=int)
+
 
   opts, args = parser.parse_args()
 
@@ -129,6 +132,11 @@ def get_HD_curve(zeta):
 def get_dipole_curve(zeta):
   coszeta = np.cos(zeta)
   return coszeta
+
+def load_custom_ppta_model():
+  from . import ppta_dr2_models
+  custom = ppta_dr2_models.PPTADR2Models
+  return custom
 
 
 def get_monopole_curve(zeta):
@@ -750,7 +758,12 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
       raise ValueError("--result should be a parameter file for \
                         optimal statistic")
     elif os.path.isfile(self.opts.result):
-      self.params = enterprise_warp.Params(self.opts.result, init_pulsars=True)
+      if self.opts.load_custom_model == 1:
+        custom_ppta_models = load_custom_ppta_model()
+      else:
+        custom_ppta_models = None
+      self.params = enterprise_warp.Params(self.opts.result, init_pulsars=True,\
+                                           custom_models_obj=custom_ppta_models)
       self.psrs = self.params.psrs
       #might want to include custom models support here
       self.outdir_all = self.params.out + self.params.label_models + '_' + \
