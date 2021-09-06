@@ -683,8 +683,10 @@ class EnterpriseWarpResult(object):
        plt.close()
 
 class OptimalStatisticWarp(EnterpriseWarpResult):
-  def __init__(self, opts):
-    super(OptimalStatisticWarp, self).__init__(opts)
+  def __init__(self, opts, custom_models_obj=None):
+    super(OptimalStatisticWarp, self).__init__(opts,\
+                                               custom_models_obj=\
+                                               custom_models_obj)
     self.interpret_opts_result()
     self.optstat_orfs = list(self.opts.optimal_statistic_orfs.split(','))
     self.optstat_nsamp = self.opts.optimal_statistic_nsamples
