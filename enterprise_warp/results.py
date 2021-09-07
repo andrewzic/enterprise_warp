@@ -1002,7 +1002,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax2.axvline((10.0**(np.mean(self.gw_log10_A)))**2.0, linestyle = '--', \
                 color = '0.5', linewidth = 0.8)
     ax2.legend(fontsize = 9)
-    ax2.set_xlabel('$\hat{{A}}^{{2}}$ & ${{A}}^{{2}}_{{\mathrm{{CP}}}}$')
+    ax2.set_xlabel('$\hat{{A}}^{{2}}$ and ${{A}}^{{2}}_{{\mathrm{{CP}}}}$')
     ax2.set_ylabel('Probability density')
     ax2.set_yscale('log')
     #ax2.set_xlim(-2.0E-29, 8E-29)
