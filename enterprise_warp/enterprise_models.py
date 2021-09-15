@@ -633,7 +633,7 @@ def selection_factory(new_selection_name):
     list_codetype_args_ext = []
 
   list_codetype_args = list_codetype_args[:1] + \
-                       list_codetype_args_ext +
+                       list_codetype_args_ext + \
                        list_codetype_args[1:]
 
   template_selection_code = types.CodeType(*list_codetype_args)
