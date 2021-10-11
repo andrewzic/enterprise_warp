@@ -141,11 +141,6 @@ def get_dipole_curve(zeta):
   coszeta = np.cos(zeta)
   return coszeta
 
-def load_custom_ppta_model():
-  from . import ppta_dr2_models
-  custom = ppta_dr2_models.PPTADR2Models
-  return custom
-
 
 def get_monopole_curve(zeta):
   return zeta * 0.0
@@ -276,6 +271,8 @@ class OptimalStatisticResult(object):
 
     weights, avg = 0., 0.
     for r,s in zip(_rho, _sig):
+      if np.isnan(r) or np.isnan(s):
+        continue
       weights += 1./(s*s)
       avg += r/(s*s)
 
