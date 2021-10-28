@@ -473,8 +473,8 @@ class EnterpriseWarpResult(object):
   def get_pars(self):
     self.par_out_label = '' if self.opts.par is None \
                             else '_'.join(self.opts.par)
-    if not os.path.exists(self.outdir + '/pars_' + self.par_out_label + '.txt'):
-      self.par_out_label = ''
+    # if not os.path.exists(self.outdir + '/pars_' + self.par_out_label + '.txt'):
+    #   self.par_out_label = ''
     if self.opts.load_separated and self.par_out_label!='':
       self.pars = np.loadtxt(self.outdir + '/pars_' + self.par_out_label + \
                              '.txt', dtype=np.unicode_)
