@@ -563,7 +563,7 @@ def interpret_rednoise_prior(prior):
 
   if not np.isscalar(prior):
     ind = 0
-    if isinstance(prior[0], 'str'):
+    if isinstance(prior[0], str):
       parameter_fn = parameter_fn_dict[prior[0]]
       ind += 1
     else:
