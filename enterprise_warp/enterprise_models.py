@@ -173,8 +173,8 @@ class StandardModels(object):
     preferred over chromatic models then the observed noise is really spin
     noise, associated with pulsar rotational irregularities.
     """
-    log10_A = self.interpret_rednoise_prior(self.params.sn_lgA)
-    gamma = self.interpret_rednoise_prior(self.params.sn_gamma)
+    log10_A = interpret_rednoise_prior(self.params.sn_lgA)
+    gamma = interpret_rednoise_prior(self.params.sn_gamma)
     option, nfreqs = self.option_nfreqs(option, sel_func_name=None)
     if option=="powerlaw":
       pl = utils.powerlaw(log10_A=log10_A, gamma=gamma, \
