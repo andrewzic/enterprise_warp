@@ -173,8 +173,8 @@ class StandardModels(object):
     preferred over chromatic models then the observed noise is really spin
     noise, associated with pulsar rotational irregularities.
     """
-    log10_A = parameter.Uniform(self.params.sn_lgA[0],self.params.sn_lgA[1])
-    gamma = parameter.Uniform(self.params.sn_gamma[0],self.params.sn_gamma[1])
+    log10_A = self.interpret_rednoise_prior(self.params.sn_lgA)
+    gamma = self.interpret_rednoise_prior(self.params.sn_gamma)
     option, nfreqs = self.option_nfreqs(option, sel_func_name=None)
     if option=="powerlaw":
       pl = utils.powerlaw(log10_A=log10_A, gamma=gamma, \
@@ -548,6 +548,29 @@ def interpret_white_noise_prior(prior):
   else:
     return parameter.Constant()
 
+def interpret_rednoise_prior(prior):
+  """interpret prior distribution parameters for red noise params, \
+  passed from parameter file.
+  Adding only one numbers sets prior to be a constant, while two numbers
+  are interpreted as Uniform prior bounds.
+  String + numbers interpreted as prior function + arguments.
+  """
+  parameter_fn_dict = {'Uniform': parameter.Uniform,\
+                       'Normal': parameter.Normal,\
+                       'Constant': parameter.Constant,\
+                       'LinearExp': parameter.LinearExp
+                       }
+
+  if not np.isscalar(prior):
+    ind = 0
+    if isinstance(prior[0], 'str'):
+      parameter_fn = parameter_fn_dict[prior[0]]
+      ind += 1
+    else:
+      parameter_fn = parameter.Uniform
+    return parameter_fn(*prior[ind:])
+  else:
+    return parameter.Constant()
 # Signal models
 
 @signal_base.function
