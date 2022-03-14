@@ -846,10 +846,14 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                 }
 
 
-    color_dict = {'hd': 'C3', \
+    color_dict = {'hd': 'C1', \
                   'dipole': 'C2', \
                   'monopole': 'C0'\
                  }
+    linestyle_dict = {'hd': '--', \
+                      'dipole': '..', \
+                      'monopole': '-.'\
+                      }
 
     default_linewidth = 0.8
     highlight_linewidth = 1.8
@@ -890,7 +894,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
       linewidth = highlight_linewidth
 
       ax.plot(zeta, __OS*orf_curve, \
-              linestyle = '--', \
+              linestyle = linestyle_dict[__orf], \
               color = color_dict[__orf], \
               linewidth = linewidth\
              )
@@ -914,10 +918,14 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
   def plot_noisemarg_os(self):
     from astropy.visualization import hist as a_hist
     #plot OS S/N
-    color_dict = {'hd': 'C3', \
+    color_dict = {'hd': 'C1', \
                   'dipole': 'C2', \
                   'monopole': 'C0'\
                  }
+    linestyle_dict = {'hd': '--', \
+                      'dipole': '..', \
+                      'monopole': '-.'\
+                      }
 
     fig1, ax1 = plt.subplots(1, 1, figsize = (3.25, 2.008))
     fig2, ax2 = plt.subplots(1, 1, figsize = (3.25, 2.008))
@@ -925,11 +933,13 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
       _noisemarg_os = _osr.marginalised_os
       _noisemarg_os_err = _osr.marginalised_os_err
       _color = color_dict[orf]
+      _linestyle = linestyle_dict[orf]
       _os = _osr.OS
       _os_err = _osr.OS_err
       a_hist(_noisemarg_os/_noisemarg_os_err, \
              histtype = 'step', \
              color = _color, \
+             linestyle = _linestyle, \
              label = orf, \
              density = True, \
              ax = ax1, \
