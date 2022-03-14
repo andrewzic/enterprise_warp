@@ -645,11 +645,11 @@ def selection_factory(new_selection_name):
                         template_sel.__code__.co_firstlineno,
                         template_sel.__code__.co_lnotab]
 
-
   #dealing with backwards-compatibility for types.CodeType
-  if 3.0 < float(sys.version[0:3]) < 3.8:
+  sys_pyversion = float(sys.version[0:3])
+  if 3.0 < sys_pyversion < 3.8:
     list_codetype_args_ext = [template_sel.__code__.co_kwonlyargcount]
-  elif float(sys.version[0:3]) >= 3.8:
+  elif sys_pyversion >= 3.8:
     list_codetype_args_ext = [template_sel.__code__.co_posonlyargcount,\
                               template_sel.__code__.co_kwonlyargcount]
   else:
