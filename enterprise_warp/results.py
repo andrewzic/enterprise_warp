@@ -840,6 +840,13 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
 
   def plot_os_orf(self):
 
+    plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    })
+    font = {'family' : 'serif',
+            'size'   : 14}
+
     orf_funcs = {'hd': get_HD_curve, \
                  'dipole': get_dipole_curve, \
                  'monopole': get_monopole_curve
@@ -903,14 +910,16 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ylo, yhi = ax.get_ylim()
     m = np.amax([np.abs(ylo), np.abs(yhi)])
     ax.set_ylim(-m, m)
-    ax.set_xlabel(r'$\zeta$ (rad)')
-    ax.set_ylabel(r'$\hat{{A}}^2 \Gamma_{{ab}}(\zeta)$')
+    ax.set_xlabel(r'$\zeta$ (rad)', fontdict = font)
+    ax.set_ylabel(r'$\hat{{A}}^2 \Gamma_{{ab}}(\zeta)$', fontdict = font)
     ax.minorticks_on()
     fig.tight_layout()
     figname = self.outdir_all + '/' + self.psr_dir + '_os_orf_' + \
               self.par_out_label + '.png'
     print(figname)
     plt.savefig(figname, bbox_inches = 'tight', dpi = 300)
+    plt.savefig(figname.replace('png', 'pdf'), bbox_inches = 'tight')
+
     plt.close(fig)
 
     return True
@@ -918,9 +927,17 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
   def plot_noisemarg_os(self):
     from astropy.visualization import hist as a_hist
     #plot OS S/N
-    color_dict = {'hd': 'C1', \
-                  'dipole': 'C2', \
-                  'monopole': 'C0'\
+
+    plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    })
+    font = {'family' : 'serif',
+            'size'   : 14}
+
+    color_dict = {'hd': 'C0', \
+                  'dipole': 'C1', \
+                  'monopole': 'C2'\
                  }
     linestyle_dict = {'hd': '--', \
                       'dipole': '..', \
@@ -969,7 +986,8 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
              label = orf, \
              density = True, \
              ax = ax2, \
-             bins = bins \
+             bins = bins, \
+             linestyle = _linestyle
             )
 
       ax2.axvline(np.mean(_noisemarg_os), \
@@ -985,11 +1003,13 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                  )
 
     ax1.legend(fontsize = 9)
-    ax1.set_xlabel('SNR')
-    ax1.set_ylabel('Probability density')
+    ax1.set_xlabel(r'$\rho$', fontdict = font)
+    ax1.set_ylabel('Density', fontdict = font)
     ax1.minorticks_on()
     fig1.savefig(self.outdir_all + '/' + self.psr_dir + '_os_SNR_' +  '_' +\
                  self.par_out_label + '.png', dpi = 300, bbox_inches = 'tight')
+    fig1.savefig(self.outdir_all + '/' + self.psr_dir + '_os_SNR_' +  '_' +\
+                     self.par_out_label + '.pdf', bbox_inches = 'tight')
     #plt.close(fig1)
 
     samp_indices = np.random.randint(0, \
@@ -1009,14 +1029,16 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax2.axvline((10.0**(np.mean(self.gw_log10_A)))**2.0, linestyle = '--', \
                 color = '0.5', linewidth = 0.8)
     ax2.legend(fontsize = 9)
-    ax2.set_xlabel('$\hat{{A}}^{{2}}$ and ${{A}}^{{2}}_{{\mathrm{{CP}}}}$')
-    ax2.set_ylabel('Probability density')
+    ax2.set_xlabel('$\hat{{A}}^{{2}}$ and ${{A}}^{{2}}_{{\mathrm{{CP}}}}$', fontdict = font)
+    ax2.set_ylabel('Density', fontdict = font)
     ax2.set_yscale('log')
     #ax2.set_xlim(-2.0E-29, 8E-29)
     ax2.minorticks_on()
     fig2.savefig(self.outdir_all + '/' + self.psr_dir + '_os_A2_' + \
                  '_' + self.par_out_label + '.png', dpi = 300, \
                  bbox_inches = 'tight')
+    fig2.savefig(self.outdir_all + '/' + self.psr_dir + '_os_A2_' + \
+                     '_' + self.par_out_label + '.pdf', bbox_inches = 'tight')
     plt.close(fig2)
     plt.close(fig1)
 
