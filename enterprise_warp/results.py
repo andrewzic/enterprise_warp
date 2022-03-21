@@ -1015,6 +1015,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax1.set_xlabel(r'$\rho$', fontdict = font)
     ax1.set_ylabel('Density', fontdict = font)
     ax1.minorticks_on()
+    ax1.set_ylim(None, 2)
     fig1.savefig(self.outdir_all + '/' + self.psr_dir + '_os_SNR_' +  '_' +\
                  self.par_out_label + '.png', dpi = 300, bbox_inches = 'tight')
     fig1.savefig(self.outdir_all + '/' + self.psr_dir + '_os_SNR_' +  '_' +\
@@ -1041,6 +1042,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     ax2.set_xlabel('$\hat{{A}}^{{2}}$ and ${{A}}^{{2}}_{{\mathrm{{CP}}}}$', fontdict = font)
     ax2.set_ylabel('Density', fontdict = font)
     ax2.set_yscale('log')
+    ax2.set_ylim(None, 1E32)
     #ax2.set_xlim(-2.0E-29, 8E-29)
     ax2.minorticks_on()
     fig2.savefig(self.outdir_all + '/' + self.psr_dir + '_os_A2_' + \
