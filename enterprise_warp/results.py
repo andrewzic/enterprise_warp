@@ -853,12 +853,12 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                 }
 
 
-    color_dict = {'hd': 'C1', \
-                  'dipole': 'C2', \
-                  'monopole': 'C0'\
+    color_dict = {'hd': 'C0', \
+                  'dipole': 'C1', \
+                  'monopole': 'C2'\
                  }
-    linestyle_dict = {'hd': '--', \
-                      'dipole': ':', \
+    linestyle_dict = {'hd': '-', \
+                      'dipole': '--', \
                       'monopole': '-.'\
                       }
 
@@ -939,8 +939,8 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                   'dipole': 'C1', \
                   'monopole': 'C2'\
                  }
-    linestyle_dict = {'hd': '--', \
-                      'dipole': ':', \
+    linestyle_dict = {'hd': '-', \
+                      'dipole': '--', \
                       'monopole': '-.'\
                       }
 
