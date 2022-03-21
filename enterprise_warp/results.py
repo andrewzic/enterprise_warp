@@ -858,7 +858,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                   'monopole': 'C0'\
                  }
     linestyle_dict = {'hd': '--', \
-                      'dipole': '..', \
+                      'dipole': ':', \
                       'monopole': '-.'\
                       }
 
@@ -940,7 +940,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                   'monopole': 'C2'\
                  }
     linestyle_dict = {'hd': '--', \
-                      'dipole': '..', \
+                      'dipole': ':', \
                       'monopole': '-.'\
                       }
 
