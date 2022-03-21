@@ -870,7 +870,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
 
     _orf = self.optstat_orfs[0]
     _osr = self.OptimalStatisticResults[_orf]
-    
+
     _xi_avg = _osr.xi_avg
     _rho_avg = _osr.rho_avg
     _xi_err = _osr.xi_err
@@ -1029,7 +1029,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
     a_hist(((10.0**(self.gw_log10_A))**2.0)[samp_indices], \
            histtype = 'step', \
            color = '0.5', \
-           label = 'uncorrelated', \
+           label = 'Uncorrelated', \
            density = True, \
            ax = ax2, \
            bins = 'knuth' \
