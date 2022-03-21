@@ -861,13 +861,16 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                       'dipole': '--', \
                       'monopole': '-.'\
                       }
-
+    label_dict = {'hd': 'HD', \
+                  'dipole': 'Dip.', \
+                  'monopole': 'Mono.'\
+                  }
     default_linewidth = 0.8
     highlight_linewidth = 1.8
 
     _orf = self.optstat_orfs[0]
     _osr = self.OptimalStatisticResults[_orf]
-
+    
     _xi_avg = _osr.xi_avg
     _rho_avg = _osr.rho_avg
     _xi_err = _osr.xi_err
@@ -944,12 +947,18 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
                       'monopole': '-.'\
                       }
 
+    label_dict = {'hd': 'HD', \
+                  'dipole': 'Dip.', \
+                  'monopole': 'Mono.'\
+                  }
+
     fig1, ax1 = plt.subplots(1, 1, figsize = (3.25, 2.008))
     fig2, ax2 = plt.subplots(1, 1, figsize = (3.25, 2.008))
     for orf, _osr in self.OptimalStatisticResults.items():
       _noisemarg_os = _osr.marginalised_os
       _noisemarg_os_err = _osr.marginalised_os_err
       _color = color_dict[orf]
+      _label = label_dict[orf]
       _linestyle = linestyle_dict[orf]
       _os = _osr.OS
       _os_err = _osr.OS_err
@@ -957,7 +966,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
              histtype = 'step', \
              color = _color, \
              linestyle = _linestyle, \
-             label = orf, \
+             label = _label, \
              density = True, \
              ax = ax1, \
              bins = 'knuth' \
@@ -983,7 +992,7 @@ class OptimalStatisticWarp(EnterpriseWarpResult):
       a_hist(_noisemarg_os, \
              histtype = 'step', \
              color = _color, \
-             label = orf, \
+             label = _label, \
              density = True, \
              ax = ax2, \
              bins = bins, \
