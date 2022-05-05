@@ -652,7 +652,7 @@ class EnterpriseWarpResult(object):
         chain_plot = chain_plot[:,self.par_mask]
         cobj.add_chain(chain_plot, name=str(jj),
                        parameters=pars[self.par_mask].tolist())
-      cobj.configure(serif=True, label_font_size=12, tick_font_size=12,
+      cobj.configure(serif=False, label_font_size=12, tick_font_size=12,
                      legend_color_text=False, legend_artists=True,
                      diagonal_tick_labels = True, usetex = False)
       corner_name = self.outdir_all + '/' + self.psr_dir + '_' + \
