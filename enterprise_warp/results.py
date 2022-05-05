@@ -642,7 +642,7 @@ class EnterpriseWarpResult(object):
     elif self.opts.corner == 2:
       cobj = ChainConsumer()
       pars = self.pars.astype(str)
-      pars = np.array(['$'+pp+'$' for pp in pars],dtype=str)
+      # pars = np.array(['$'+pp+'$' for pp in pars],dtype=str)
       for jj in self.unique:
         if jj is not None:
           model_mask = np.round(self.chain_burn[:,self.ind_model]) == jj
@@ -653,7 +653,8 @@ class EnterpriseWarpResult(object):
         cobj.add_chain(chain_plot, name=str(jj),
                        parameters=pars[self.par_mask].tolist())
       cobj.configure(serif=True, label_font_size=12, tick_font_size=12,
-                     legend_color_text=False, legend_artists=True)
+                     legend_color_text=False, legend_artists=True,
+                     diagonal_tick_labels = True, usetex = False)
       corner_name = self.outdir_all + '/' + self.psr_dir + '_' + \
                     self.par_out_label + '_corner.png'
       fig = cobj.plotter.plot(filename=corner_name)
