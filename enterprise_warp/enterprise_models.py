@@ -130,6 +130,22 @@ class StandardModels(object):
     eqs = white_signals.EquadNoise(log10_equad=equadpr,selection=se)
     return eqs
 
+  def efac_equad(self, option = "by_backend"):
+    """
+    EFAC signal:  multiplies ToA variance by EFAC**2, where ToA variance
+    are diagonal components of the Likelihood covariance matrix.
+    EQUAD signal: adds EQUAD**2 to the ToA variance, where ToA variance
+    are diagonal components of the Likelihood covariance matrix.
+    """
+    if option not in selections.__dict__.keys():
+      raise ValueError('EFAC/EQUAD option must be Enterprise selection function\
+      name')
+    se=selections.Selection(selections.__dict__[option])
+    efacpr = interpret_white_noise_prior(self.params.efac)
+    equadpr = interpret_white_noise_prior(self.params.equad)
+    efqs = white_signals.MeasurementNoise(efac=efacpr, log10_t2equad = equadpr,\
+    selection=se)
+
   def ecorr(self,option="by_backend"):
     """
     Similar to EFAC and EQUAD, ECORR is a white noise parameter that
